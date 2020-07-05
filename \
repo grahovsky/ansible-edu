@@ -10,7 +10,7 @@
 # linux1 ansible_host=192.168.1.10 ansible_user=grahovsky ansible_ssh_private_key_file=/home/grahovsky/.ssh/arch-tc
 linux1 ansible_host=192.168.1.10
 
-# move to ./group_vars/lin
+# move to group_vars
 #[lin:vars]
 #ansible_user=grahovsky
 #ansible_ssh_private_key_file=/home/grahovsky/.ssh/arch-tc
