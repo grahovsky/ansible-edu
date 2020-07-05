@@ -1,0 +1,10 @@
+---
+- name: Test Connection to my servers
+  hosts: lin
+  become: yes
+
+  tasks:
+  - name: Pyng my servers
+    ping:
+
+...
