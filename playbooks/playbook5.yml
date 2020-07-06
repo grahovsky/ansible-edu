@@ -1,0 +1,42 @@
+---
+- name: Install Apache and Upload my Web Page
+  hosts: lin
+  become: yes
+
+  vars:
+    source_file: ../MyWebSite/index.html
+    destin_file_rhel: /var/www/html
+    destin_file_arch: /srv/http
+
+  tasks:
+  
+  - name: Check and Print LINUX Version
+    debug:
+      var: ansible_os_family
+
+  - name: Install Apache Web Server for RedHat
+    yum: name=httpd state=latest
+    when: ansible_os_family == "RedHat"
+
+  - name: Install Apache Web Server for ArchLinux
+    pacman: name=apache state=latest
+    when: ansible_os_family == "Archlinux"
+
+  - name: Copy MyHomePage to Servers
+    copy: src={{ source_file }} dest={{ destin_file_rhel }} mode=0555
+    notify: Restart Apache
+    when: ansible_os_family == "RedHat"
+
+  - name: Copy MyHomePage to Servers
+    copy: src={{ source_file }} dest={{ destin_file_arch }} mode=0555
+    notify: Restart Apache
+    when: ansible_os_family == "Archlinux"
+  
+  - name: Start WebServer and make it enable on boot
+    service: name=httpd state=started enabled=yes
+
+  handlers:
+  - name: Restart Apache
+    service: name=httpd state=restarted
+
+...
