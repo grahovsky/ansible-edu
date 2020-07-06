@@ -1,0 +1,46 @@
+---
+- name: Playbook for Variables Lesson
+  hosts: lin
+  become: yes
+
+
+  vars:
+   message1: Hello
+   message2: World
+   secret: mySecreT11
+
+  tasks:
+
+  - name: Print Secret variable
+    debug:
+      var: secret
+
+  - name: Owner variable
+    debug:
+      var: owner
+
+  - name: Owner variable with message
+    debug:
+      msg: "Owner is {{ owner }}"
+
+  - set_fact: full_message="{{ message1 }} {{ message2 }} from {{ owner }}"
+
+  - debug:
+      var: full_message
+
+  # use 'ansible lin -m setup" for get variable
+ 
+  - debug:
+      var: ansible_distribution
+    name: Print setup variable
+
+  - shell: uptime
+    register: results
+
+  - debug:
+      var: results
+
+  - debug:
+      var: results.stdout
+
+...

@@ -15,6 +15,9 @@ linux1 ansible_host=192.168.1.10
 #ansible_user=grahovsky
 #ansible_ssh_private_key_file=/home/grahovsky/.ssh/arch-tc
 
+[lin:vars]
+owner=Konstantin
+
 [staging_ALL:children]
 staging_DB
 staging_APP
