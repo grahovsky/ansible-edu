@@ -1,5 +1,6 @@
 # ansible-edu
 
+
 # ad-hoc commands
 ansible lin -m shell -a "df -h"
 
@@ -23,8 +24,18 @@ ansible lin -m shell -a "df -h" -vvvv # verbose v, vv, vvv, vvvv
 
 ansible-doc -l | grep win
 
-# ansible-galaxy init deploy_apache_web
+
+# Roles
+ansible-galaxy init deploy_apache_web
 
 https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html
+
+
+# extra vars
+
+ansible-playbook playbooks/playbook11.yml --extra-vars "myhosts=lin"
+ansible-playbook playbooks/playbook11.yml --extra-vars "myhosts=lin owner=MAX" 
+
+extra-vars - overriding vars
 
 
