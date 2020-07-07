@@ -1,0 +1,4 @@
+---
+# defaults file for deploy_apache_web
+destin_folder_rhel: /var/www/html
+destin_folder_arch: /srv/http

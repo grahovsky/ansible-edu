@@ -1,0 +1,46 @@
+---
+# tasks file for deploy_apache_web
+
+- name: Check and Print LINUX Version
+  debug:
+    var: ansible_os_family
+
+- block:    # block for RedHat
+
+  - name: Install Apache Web Server for RedHat
+    yum: name=httpd state=latest
+
+  - name: Generate INDEX.HTML file
+    template: src=index.j2 dest={{ destin_folder_rhel }}/index.html mode=0555
+    notify:
+      - Restart Apache
+
+  - name: Copy MyHomePage to Servers
+    copy: src={{item}} dest={{ destin_folder_rhel }} mode=0555
+    loop:
+      - "newzeland.png"
+    notify:
+      - Restart Apache
+
+  when: ansible_os_family == "RedHat"
+
+- block:    # block for Archlinux
+
+  - name: Install Apache Web Server for ArchLinux
+    pacman: name=apache state=latest
+
+  - name: Generate INDEX.HTML file
+    template: src=index.j2 dest={{ destin_folder_arch }}/index.html mode=0555
+    notify: 
+      - Restart Apache
+
+  - name: Copy MyHomePage to Servers
+    copy: src={{item}} dest={{ destin_folder_arch }} mode=0555
+    with_fileglob: "*.*"
+    notify: 
+      - Restart Apache
+
+  when: ansible_os_family == "Archlinux"
+
+- name: Start WebServer and make it enable on boot
+  service: name=httpd state=started enabled=yes
