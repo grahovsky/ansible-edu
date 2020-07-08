@@ -1,0 +1,7 @@
+---
+
+- name: Ping my servers
+  ping:
+
+- debug:
+    msg: "{{ message1 }} {{ message2 }} {{ message3 }} {{ message4 }}"

@@ -1,0 +1,11 @@
+---
+- set_fact: execute=true
+  when: execute==false
+
+- set_fact: message2="WORLD+"
+  when: execute
+
+- set_fact: message4="dynamic"
+  when: execute
+
+
