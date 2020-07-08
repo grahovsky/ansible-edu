@@ -1,0 +1,36 @@
+---
+- name: Ansible error handling
+  hosts: lin
+  any_errors_fatal: yes # stop playbook on all hosts
+  become: yes
+
+  tasks:
+
+  - name: Task Number1
+    ping:
+
+  - name: Task Number2
+    yum: name=treeeeee state=latest
+    ignore_errors: yes
+
+  - name: Task Number3
+    shell: cat /home/grahovsky/ansible-edu/hosts
+    #delegate_to: 127.0.0.1
+    register: results
+    #failed_when: results.rc == 0     # call error if result code return is 0
+    #failed_when: "'errorhandling' in results1.stdout"      # find in result.stdout
+
+  - debug: var=results
+
+  - name: Task Number4
+    shell: echo UPDATING Database... && sleep 5
+    
+  - name: Task Number5
+    shell: uptime
+    register: results
+
+  - debug: var=results
+
+  
+
+...
