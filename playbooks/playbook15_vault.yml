@@ -1,0 +1,32 @@
+---
+- name: Ansible error handling
+  hosts: lin
+  become: yes
+
+  vars:
+    password1: 1234asdfjqwer
+    password2: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      34393261666637396362393231326138666363373661656533336636363032396630353262333834
+      3061303330663532623836323264353834303935373261330a653033653337313533656435303564
+      64666537626665383139653431343534386535396562353966336331663730323233386633636363
+      3935656137646365630a333431626130376365393736396665386662623262663536333037396331
+      3537
+
+  tasks:
+
+  - name: Task Number1
+    shell: echo {{ password1 }}  >> /home/grahovsky/superpass.txt
+
+  - name: Task Number2
+    shell: echo {{ password2 }}  >> /home/grahovsky/superpass.txt
+
+  - name: add secret vars
+    include_vars:
+      file: secret_vars.yml
+
+  - name: Task Number2
+    shell: echo {{ password }}  >> /home/grahovsky/superpass.txt
+
+    
+...
